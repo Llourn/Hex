@@ -1,29 +1,66 @@
-var containerHeight;
-var containerWidth;
 var hexSize = 120;
+var currentMapSize;
+var hexRows;
+var hexColumns;
+
+const mapSize = {
+    SMALL: 1,
+    MEDIUM: 2,
+    LARGE: 3
+}
 
 $(document).ready(function () {
+    currentMapSize = mapSize.LARGE;
     calculateDimensions();
     generateGrid();
 });
 
-function generateGrid() {
-    console.log("width: " +containerWidth);
-    console.log("height: " +containerHeight);
+jQuery(function($){
+    $('.hex').click(function(){
+        this.style.fill = "#000";
+    });
+});
 
+function generateGrid() {
     // for loop of rows.
-    for(let i = 1; i < containerHeight; i++) {
-        console.log('ROW: ' + i);
+    for(let i = 0; i < hexRows + 1; i++) {
+        // console.log('ROW: ' + i);
         $('#container').append("<div id='row-" + i + "'>");
         // inner for loop of columns.
-        for (let j = 1; j < containerWidth; j++) {
-            console.log('COLUMN: ' + j);
+        for (let j = 0; j < hexColumns + 1; j++) {
+            // console.log('COLUMN: ' + j);
             $('#row-'+i).append("<svg viewbox='0 0 60 60'><path class='hex' id='" + j + "-" + i + "' d='M30 0L0 15L0 45L30 60L60 45L60 15L30 0Z'/></svg>");
         }
     }
 }
 
 function calculateDimensions() {
-    containerHeight = $(window).height() / hexSize;
-    containerWidth = $(window).width() / hexSize;
+    // Calculate container size based on chosen map size.
+    switch (currentMapSize) {
+        case mapSize.SMALL:
+            hexColumns = hexRows = 10;
+            break;
+            
+        case mapSize.MEDIUM:
+            hexColumns = hexRows = 15;
+            break;
+            
+        case mapSize.LARGE:
+            hexColumns = hexRows = 20;
+            break;
+        
+        default:
+            console.log("ERROR, Map size invalid!");
+            break;
+        }
+            
+        updateContainerDimensions(hexRows, hexColumns);
+}
+
+function updateContainerDimensions(w, h) {
+    var containerWidth = 120 * w;
+    var containerHeight = 86 * h;
+
+    $('#container').width(containerWidth);
+    $('#container').height(containerHeight);
 }
