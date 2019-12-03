@@ -1,13 +1,22 @@
-var hexSize = 120;
-var currentMapSize;
-var hexRows;
-var hexColumns;
+const hexType = {
+    WHITE: 'fill:url(#white)',
+    BLACK: 'fill:url(#black)',
+    WATER: 'fill:url(#water)',
+    GRASS: 'fill:url(#grass)',
+    MOUNTAIN: 'fill:url(#mountain)'
+}
 
 const mapSize = {
     SMALL: 1,
     MEDIUM: 2,
     LARGE: 3
 }
+
+var hexSize = 120;
+var currentMapSize;
+var hexRows;
+var hexColumns;
+var queuedHexType = 'fill:url(#black)';
 
 $(document).ready(function () {
     currentMapSize = mapSize.LARGE;
@@ -17,21 +26,51 @@ $(document).ready(function () {
 
 jQuery(function($){
     $('.hex').click(function(){
-        this.style.fill = "#000";
+        $(this).attr('style', queuedHexType)
     });
 });
+
+document.addEventListener("keydown", function(event) {
+    switch (event.which) {
+        case 49:
+            queuedHexType = hexType.WHITE;
+            break;
+    
+        case 50:
+            queuedHexType = hexType.BLACK;
+            break;
+    
+        case 51:
+            queuedHexType = hexType.GRASS;
+            break;
+    
+        case 52:
+            queuedHexType = hexType.WATER;
+            break;
+    
+        case 53:
+            queuedHexType = hexType.MOUNTAIN;
+            break;
+    
+        default:
+            console.log('invalid hex type.');
+            break;
+    }
+})
 
 function generateGrid() {
     // for loop of rows.
     for(let i = 0; i < hexRows + 1; i++) {
-        // console.log('ROW: ' + i);
         $('#container').append("<div id='row-" + i + "'>");
         // inner for loop of columns.
         for (let j = 0; j < hexColumns + 1; j++) {
-            // console.log('COLUMN: ' + j);
-            $('#row-'+i).append("<svg viewbox='0 0 60 60'><path class='hex' id='" + j + "-" + i + "' d='M30 0L0 15L0 45L30 60L60 45L60 15L30 0Z'/></svg>");
+            $('#row-'+i).append("<svg viewbox='0 0 60 60'><path id='" + j + "-" + i + "' class='hex' style='fill:url(#white)' d='M30 0L0 15L0 45L30 60L60 45L60 15L30 0Z' /></svg>");
         }
     }
+}
+
+function grassFill() {
+
 }
 
 function calculateDimensions() {
