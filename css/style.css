@@ -14,6 +14,10 @@
     display: inline-block;
     clear: both;
   }
+
+  svg:hover {
+    z-index: 10;
+  }
   
   br {
     margin: 0;
@@ -23,6 +27,11 @@
   .hex {
     fill: white;
     stroke: black;
+  }
+
+  .hex:hover {
+    stroke: orange;
+    stroke-width: 3px;
   }
 
   #container {
