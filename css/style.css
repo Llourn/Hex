@@ -25,13 +25,23 @@
   }
   
   .hex {
+    pointer-events: fill;
     fill: white;
     stroke: black;
   }
 
+  .hex-hover {
+    pointer-events: none;
+    stroke: rgba(255, 0, 0, 0.561);
+  }
+
+  .hexRow {
+    pointer-events: none;
+  }
+
   .hex:hover {
-    stroke: orange;
-    stroke-width: 3px;
+    /* stroke: orange; */
+    /* stroke-width: 3px; */
   }
 
   #container {
@@ -55,4 +65,12 @@
   #definitions {
     position: absolute;
     margin-top: -500px;
+  }
+
+  .ignore {
+    pointer-events: none;
+  }
+
+  .border-on {
+    opacity: 1;
   }

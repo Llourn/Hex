@@ -22,12 +22,14 @@ $(document).ready(function () {
     currentMapSize = mapSize.LARGE;
     calculateDimensions();
     generateGrid();
-});
 
-jQuery(function($){
     $('.hex').click(function(){
         $(this).attr('style', queuedHexType)
     });
+
+    $('.hex').hover(function() {
+        $(this).siblings('g').children('use').toggleClass('border-on');
+    })
 });
 
 document.addEventListener("keydown", function(event) {
@@ -61,10 +63,10 @@ document.addEventListener("keydown", function(event) {
 function generateGrid() {
     // for loop of rows.
     for(let i = 0; i < hexRows + 1; i++) {
-        $('#container').append("<div id='row-" + i + "'>");
+        $('#container').append("<div class='hexRow' id='row-" + i + "'>");
         // inner for loop of columns.
         for (let j = 0; j < hexColumns + 1; j++) {
-            $('#row-'+i).append("<svg viewbox='0 0 60 60'><path id='" + j + "-" + i + "' class='hex' style='fill:url(#white)' d='M30 0L0 15L0 45L30 60L60 45L60 15L30 0Z' /></svg>");
+            $('#row-'+i).append("<svg viewbox='0 0 60 60'><path id='" + j + "-" + i + "' class='hex' style='fill:url(#white)' d='M30 0L0 15L0 45L30 60L60 45L60 15L30 0Z' /><g clip-path='url(#clipd23MBFcxtL)'><use xlink:href='#adlsVje2n' class='hex-hover' opacity='0' fill-opacity='0' stroke='#000000' stroke-width='6' stroke-opacity='1'/></g></svg>");
         }
     }
 }
